@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vaiper Xmod Pro UI - Ultimate Launcher</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --red-glow: #ff3c3c;
+            --dark-panel: #111;
+        }
+
+        body {
+            background-color: #000;
+            color: white;
+            font-family: 'Kanit', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        .app-container {
+            width: 420px;
+            background: linear-gradient(180deg, #1a1a1a 0%, #050505 100%);
+            border: 2px solid #333;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 0 40px rgba(255, 60, 60, 0.25);
+            position: relative;
+        }
+
+        header h1 {
+            text-align: center;
+            font-size: 3rem;
+            margin: 0;
+            font-style: italic;
+            background: linear-gradient(to bottom, #fff, #666);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .version {
+            color: var(--red-glow);
+            display: block;
+            text-align: center;
+            font-size: 0.9rem;
+            font-weight: bold;
+            letter-spacing: 3px;
+            margin-bottom: 25px;
+        }
+
+        .screen { display: none; min-height: 480px; }
+        .active { display: block; animation: fadeIn 0.4s ease; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .menu-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid #333;
+            padding: 20px 10px;
+            cursor: pointer;
+            text-align: center;
+            border-radius: 15px;
+            transition: 0.3s;
+        }
+
+        .menu-item i {
+            display: block;
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+            color: var(--red-glow);
+            filter: drop-shadow(0 0 5px var(--red-glow));
+        }
+
+        .menu-item:hover {
+            border-color: var(--red-glow);
+            background: rgba(255, 60, 60, 0.05);
+            transform: translateY(-3px);
+        }
+
+        .slider-section {
+            margin-top: 10px;
+            padding: 15px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 15px;
+            border: 1px solid #222;
+        }
+
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            color: #ccc;
+        }
+
+        .slider-label b { color: var(--red-glow); font-size: 1.1rem; }
+
+        .range-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 12px;
+            background: #222;
+            border-radius: 6px;
+            outline: none;
+            margin-bottom: 20px;
+            border: 1px solid #444;
+            clip-path: polygon(0 0, 98% 0, 100% 100%, 2% 100%);
+        }
+
+        .range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 22px;
+            height: 22px;
+            background: var(--red-glow);
+            cursor: pointer;
+            border-radius: 50%;
+            box-shadow: 0 0 15px var(--red-glow);
+            border: 2px solid #fff;
+        }
+
+        /* START BUTTON */
+        .start-btn {
+            width: 100%;
+            padding: 15px;
+            margin-top: 25px;
+            background: linear-gradient(90deg, #800000, #ff3c3c, #800000);
+            background-size: 200% auto;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-family: 'Kanit';
+            font-size: 1.5rem;
+            font-weight: bold;
+            font-style: italic;
+            cursor: pointer;
+            text-shadow: 0 0 10px rgba(0,0,0,0.5);
+            box-shadow: 0 0 20px rgba(255, 60, 60, 0.4);
+            transition: 0.5s;
+            animation: pulse-glow 2s infinite, bg-move 3s linear infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 10px rgba(255, 60, 60, 0.4); }
+            50% { box-shadow: 0 0 30px rgba(255, 60, 60, 0.8); }
+        }
+
+        @keyframes bg-move {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        .start-btn:active { transform: scale(0.95); }
+
+        .sub-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 15px;
+        }
+
+        .back-btn {
+            background: var(--red-glow);
+            border: none;
+            color: white;
+            padding: 6px 15px;
+            cursor: pointer;
+            border-radius: 8px;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+
+        .scroll-area {
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 8px;
+        }
+
+        .feature-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.04);
+            padding: 14px 18px;
+            margin-bottom: 10px;
+            border-radius: 12px;
+        }
+
+        .switch { position: relative; width: 44px; height: 22px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider-toggle {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #333; transition: .4s; border-radius: 20px;
+        }
+        .slider-toggle:before {
+            position: absolute; content: ""; height: 16px; width: 16px;
+            left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%;
+        }
+        input:checked + .slider-toggle { background-color: var(--red-glow); }
+        input:checked + .slider-toggle:before { transform: translateX(22px); }
+
+        .credit-content { text-align: center; }
+        .profile-img {
+            width: 110px; height: 110px; border-radius: 50%;
+            border: 4px solid var(--red-glow); margin-bottom: 15px;
+            box-shadow: 0 0 20px var(--red-glow);
+            object-fit: cover;
+        }
+        .fb-link {
+            display: inline-block; background: #1877F2; color: white;
+            padding: 10px 25px; border-radius: 25px; text-decoration: none; font-weight: bold;
+        }
+        
+        .footer-credit { text-align: center; font-size: 0.7rem; color: #444; margin-top: 15px; }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <header>
+        <h1>VaiperX</h1>
+        <span class="version">PREMIUM MOD V4</span>
+    </header>
+
+    <div id="main-screen" class="screen active">
+        <div class="menu-grid">
+            <div class="menu-item" onclick="openMenu('aim')"><i class="fa-solid fa-crosshairs"></i><span>ระบบดูดหัว</span></div>
+            <div class="menu-item" onclick="openMenu('antiban')"><i class="fa-solid fa-shield-halved"></i><span>กันแบน</span></div>
+            <div class="menu-item" onclick="openMenu('fps')"><i class="fa-solid fa-gauge-high"></i><span>บูส FPS</span></div>
+            <div class="menu-item" onclick="openMenu('credit')"><i class="fa-solid fa-user-gear"></i><span>เครดิต</span></div>
+        </div>
+
+        <div class="slider-section">
+            <div class="slider-label"><span>DPI (600-1500)</span><b id="dpi-val">1000</b></div>
+            <input type="range" min="600" max="1500" value="1000" class="range-slider" id="dpi-range">
+
+            <div class="slider-label"><span>ความเร็วตอบสนอง</span><b id="resp-val">50%</b></div>
+            <input type="range" min="1" max="100" value="50" class="range-slider" id="resp-range">
+        </div>
+
+        <button class="start-btn" onclick="launchGame()">START GAME</button>
+        <div class="footer-credit">CREDIT: VaiperXWIN100</div>
+    </div>
+
+    <div id="aim-screen" class="screen">
+        <div class="sub-header"><button class="back-btn" onclick="goBack()">BACK</button><span>AIM SYSTEM</span></div>
+        <div class="scroll-area">
+            <div class="feature-row"><span>ดูดหัวช่วยลาก</span><label class="switch"><input type="checkbox"><span class="slider-toggle"></span></label></div>
+            <div class="feature-row"><span>ลากหัวง่าย</span><label class="switch"><input type="checkbox"><span class="slider-toggle"></span></label></div>
+            <div class="feature-row"><span>ล็อคเป้าเป้านิ่ง</span><label class="switch"><input type="checkbox"><span class="slider-toggle"></span></label></div>
+            <div class="feature-row"><span>เพิ่มความไวเป้า X2</span><label class="switch"><input type="checkbox"><span class="slider-toggle"></span></label></div>
+            <div class="feature-row"><span>เน้นยิงหัว 100%</span><label class="switch"><input type="checkbox"><span class="slider-toggle"></span></label></div>
+            <div class="feature-row"><span>ลดวงกระสุน</span><label class="switch"><input type="checkbox"><span class="slider-toggle"></span></label></div>
+        </div>
+    </div>
+
+    <div id="antiban-screen" class="screen">
+        <div class="sub-header"><button class="back-btn" onclick="goBack()">BACK</button><span>SECURITY</span></div>
+        <div class="scroll-area">
+            <div class="feature-row"><span>กันแบน V4</span><label class="switch"><input type="checkbox" checked><span class="slider-toggle"></span></label></div>
+            <div class="feature-row"><span>กันรายงาน</span><label class="switch"><input type="checkbox"><span class="slider-toggle"></span></label></div>
+            <div class="feature-row"><span>ล้างไฟล์ Log</span><label class="switch"><input type="checkbox"><span class="slider-toggle"></span></label></div>
+            <div class="feature-row"><span>ซ่อนไอดี</span><label class="switch"><input type="checkbox"><span class="slider-toggle"></span></label></div>
+            <div class="feature-row"><span>บายพาสเซิร์ฟเวอร์</span><label class="switch"><input type="checkbox"><span class="slider-toggle"></span></label></div>
+            <div class="feature-row"><span>โหมดสตรีมเมอร์</span><label class="switch"><input type="checkbox"><span class="slider-toggle"></span></label></div>
+        </div>
+    </div>
+
+    <div id="fps-screen" class="screen">
+        <div class="sub-header"><button class="back-btn" onclick="goBack()">BACK</button><span>PERFORMANCE</span></div>
+        <div class="scroll-area">
+            <div class="feature-row"><span>ปลดล็อค FPS 120</span><label class="switch"><input type="checkbox"><span class="slider-toggle"></span></label></div>
+            <div class="feature-row"><span>แก้กระตุก 100%</span><label class="switch"><input type="checkbox" checked><span class="slider-toggle"></span></label></div>
+            <div class="feature-row"><span>เร่งเทอร์โบเครื่อง</span><label class="switch"><input type="checkbox"><span class="slider-toggle"></span></label></div>
+            <div class="feature-row"><span>ลบพุ่มหญ้า</span><label class="switch"><input type="checkbox"><span class="slider-toggle"></span></label></div>
+            <div class="feature-row"><span>ลดความร้อน CPU</span><label class="switch"><input type="checkbox"><span class="slider-toggle"></span></label></div>
+            <div class="feature-row"><span>กราฟิกสมูท</span><label class="switch"><input type="checkbox"><span class="slider-toggle"></span></label></div>
+        </div>
+    </div>
+
+    <div id="credit-screen" class="screen">
+        <div class="sub-header"><button class="back-btn" onclick="goBack()">BACK</button><span>CREATOR</span></div>
+        <div class="credit-content">
+            <img src="https://i.postimg.cc/d0L2QJFB/87C76E66-5A35-4C58-A93D-FC902CF01AD6.jpg" class="profile-img">
+            <h2>Vaiper Xmod</h2>
+            <p>The Master of Free Fire Script</p>
+            <a href="https://www.facebook.com/share/1AYEjjbJjt/?mibextid=wwXIfr" target="_blank" class="fb-link">ติดต่อเฟซบุ๊ก</a>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function launchGame() {
+        const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+        const isIOS = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
+
+        if (confirm("กำลังเข้าสู่เกม Free Fire...")) {
+            if (isIOS) {
+                // พยายามเปิด Free Fire หรือ Free Fire MAX บน iOS
+                window.location.href = "freefire://";
+                setTimeout(() => {
+                    window.location.href = "freefiremax://";
+                }, 1000);
+            } else {
+                // สำหรับ Android ใช้ Intent Scheme
+                window.location.href = "intent://#Intent;scheme=android-app;package=com.dts.freefireth;end";
+            }
+        }
+    }
+
+    function openMenu(menuId) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById(menuId + '-screen').classList.add('active');
+    }
+
+    function goBack() {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById('main-screen').classList.add('active');
+    }
+
+    const dpiRange = document.getElementById('dpi-range');
+    const dpiVal = document.getElementById('dpi-val');
+    dpiRange.oninput = function() { dpiVal.innerHTML = this.value; }
+
+    const respRange = document.getElementById('resp-range');
+    const respVal = document.getElementById('resp-val');
+    respRange.oninput = function() { respVal.innerHTML = this.value + "%"; }
+</script>
+
+</body>
+</html>
