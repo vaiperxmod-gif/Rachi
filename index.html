@@ -2,358 +2,433 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vaiper Xmod Pro UI - Ultimate Launcher</title>
-    
-    <link rel="apple-touch-icon" href="https://i.postimg.cc/zDw3H3JB/IMG-4681.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="VaiperX V4">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
-    <link rel="icon" type="image/png" href="https://i.postimg.cc/zDw3H3JB/IMG-4681.png">
-    <meta name="mobile-web-app-capable" content="yes">
-
+    <link rel="apple-touch-icon" href="https://i.postimg.cc/cH3f4ffT/BB0817E8-3B60-4430-97AC-D14B39ACE9FD.png">
+    
+    <title>VaiperX V.1 - SHADOW CONTROL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;500;700&family=Cinzel+Decorative:wght@700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;500;700&display=swap" rel="stylesheet">
     
     <style>
-        :root {
-            --red-glow: #ff3c3c;
-            --dark-panel: #111;
+        :root { 
+            --ink-black: #050505;
+            --ink-dark: rgba(10, 10, 10, 0.85);
+            --ink-border: rgba(255, 255, 255, 0.1);
+            --samurai-white: #ffffff;
+            --text-muted: #777777;
         }
 
-        body {
-            background-color: #000;
-            color: white;
-            font-family: 'Kanit', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            overflow-x: hidden;
+        /* ระบบป้องกันการคัดลอกและการเข้าถึงโค้ด */
+        * {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
+            box-sizing: border-box;
         }
 
-        .app-container {
-            width: 420px;
-            background: linear-gradient(180deg, #1a1a1a 0%, #050505 100%);
-            border: 2px solid #333;
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 0 40px rgba(255, 60, 60, 0.25);
-            position: relative;
-        }
-
-        header h1 {
-            text-align: center;
-            font-size: 3rem;
-            margin: 0;
-            font-style: italic;
-            background: linear-gradient(to bottom, #fff, #666);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .version {
-            color: var(--red-glow);
-            display: block;
-            text-align: center;
-            font-size: 0.9rem;
-            font-weight: bold;
-            letter-spacing: 3px;
-            margin-bottom: 25px;
-        }
-
-        .screen { display: none; min-height: 480px; }
-        .active { display: block; animation: fadeIn 0.4s ease; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.98); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        .menu-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-
-        .menu-item {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid #333;
-            padding: 20px 10px;
-            cursor: pointer;
-            text-align: center;
-            border-radius: 15px;
-            transition: 0.3s;
-        }
-
-        .menu-item i {
-            display: block;
-            font-size: 1.8rem;
-            margin-bottom: 8px;
-            color: var(--red-glow);
-            filter: drop-shadow(0 0 5px var(--red-glow));
-        }
-
-        .menu-item:hover {
-            border-color: var(--red-glow);
-            background: rgba(255, 60, 60, 0.05);
-            transform: translateY(-3px);
-        }
-
-        .slider-section {
-            margin-top: 10px;
-            padding: 15px;
-            background: rgba(255,255,255,0.02);
-            border-radius: 15px;
-            border: 1px solid #222;
-        }
-
-        .slider-label {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.9rem;
-            margin-bottom: 8px;
-            color: #ccc;
-        }
-
-        .slider-label b { color: var(--red-glow); font-size: 1.1rem; }
-
-        .range-slider {
-            -webkit-appearance: none;
-            width: 100%;
-            height: 12px;
-            background: #222;
-            border-radius: 6px;
-            outline: none;
-            margin-bottom: 20px;
-            border: 1px solid #444;
-            clip-path: polygon(0 0, 98% 0, 100% 100%, 2% 100%);
-        }
-
-        .range-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 22px;
-            height: 22px;
-            background: var(--red-glow);
-            cursor: pointer;
-            border-radius: 50%;
-            box-shadow: 0 0 15px var(--red-glow);
-            border: 2px solid #fff;
-        }
-
-        /* START BUTTON */
-        .start-btn {
-            width: 100%;
-            padding: 15px;
-            margin-top: 25px;
-            background: linear-gradient(90deg, #800000, #ff3c3c, #800000);
-            background-size: 200% auto;
-            border: none;
-            border-radius: 10px;
-            color: white;
-            font-family: 'Kanit';
-            font-size: 1.5rem;
-            font-weight: bold;
-            font-style: italic;
-            cursor: pointer;
-            text-shadow: 0 0 10px rgba(0,0,0,0.5);
-            box-shadow: 0 0 20px rgba(255, 60, 60, 0.4);
-            transition: 0.5s;
-            animation: pulse-glow 2s infinite, bg-move 3s linear infinite;
-        }
-
-        @keyframes pulse-glow {
-            0%, 100% { box-shadow: 0 0 10px rgba(255, 60, 60, 0.4); }
-            50% { box-shadow: 0 0 30px rgba(255, 60, 60, 0.8); }
-        }
-
-        @keyframes bg-move {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 200% 50%; }
-        }
-
-        .start-btn:active { transform: scale(0.95); }
-
-        .sub-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #333;
-            padding-bottom: 15px;
-        }
-
-        .back-btn {
-            background: var(--red-glow);
-            border: none;
-            color: white;
-            padding: 6px 15px;
-            cursor: pointer;
-            border-radius: 8px;
-            margin-right: 15px;
-            font-weight: bold;
-        }
-
-        .scroll-area {
-            max-height: 400px;
-            overflow-y: auto;
-            padding-right: 8px;
-        }
-
-        .feature-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(255,255,255,0.04);
-            padding: 14px 18px;
-            margin-bottom: 10px;
-            border-radius: 12px;
-        }
-
-        .switch { position: relative; width: 44px; height: 22px; }
-        .switch input { opacity: 0; width: 0; height: 0; }
-        .slider-toggle {
-            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
-            background-color: #333; transition: .4s; border-radius: 20px;
-        }
-        .slider-toggle:before {
-            position: absolute; content: ""; height: 16px; width: 16px;
-            left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%;
-        }
-        input:checked + .slider-toggle { background-color: var(--red-glow); }
-        input:checked + .slider-toggle:before { transform: translateX(22px); }
-
-        .credit-content { text-align: center; }
-        .profile-img {
-            width: 110px; height: 110px; border-radius: 50%;
-            border: 4px solid var(--red-glow); margin-bottom: 15px;
-            box-shadow: 0 0 20px var(--red-glow);
-            object-fit: cover;
-        }
-        .fb-link {
-            display: inline-block; background: #1877F2; color: white;
-            padding: 10px 25px; border-radius: 25px; text-decoration: none; font-weight: bold;
+        body { 
+            margin: 0; 
+            height: 100vh; 
+            background: #000; 
+            font-family: 'Kanit', sans-serif; 
+            color: white; 
+            overflow: hidden; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            position: relative; 
         }
         
-        .footer-credit { text-align: center; font-size: 0.7rem; color: #444; margin-top: 15px; }
+        /* ==================== INK CLICK EFFECT ==================== */
+        .ink-click-ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.6) 0%, rgba(240,240,240,0.2) 40%, transparent 70%);
+            filter: blur(3px);
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%) scale(0);
+            animation: ink-ripple-anim 0.6s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+        }
+
+        @keyframes ink-ripple-anim {
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+        }
+
+        /* ==================== LOADING OVERLAY EFFECT ==================== */
+        #loading-overlay { position: fixed; inset: 0; background: #000; z-index: 1000; display: flex; justify-content: center; align-items: center; overflow: hidden; }
+        .samurai-shadow-eff { position: absolute; width: 140px; height: 140px; background: url('https://i.postimg.cc/cH3f4ffT/BB0817E8-3B60-4430-97AC-D14B39ACE9FD.png') no-repeat center; background-size: contain; filter: brightness(0) drop-shadow(0 0 15px rgba(0,0,0,1)); bottom: 52%; opacity: 0; animation: samurai-appear 2s cubic-bezier(0.1, 0.8, 0.3, 1) infinite; z-index: 2; }
+        @keyframes samurai-appear {
+            0% { opacity: 0; transform: scale(0.8) translateY(20px); filter: brightness(0) blur(5px); }
+            15% { opacity: 0.7; transform: scale(1.05) translateY(0); filter: brightness(0) blur(0px); }
+            30% { opacity: 0.4; transform: scale(1) translateY(-5px); }
+            50% { opacity: 0; transform: scale(1.1) translateY(-10px); }
+            100% { opacity: 0; }
+        }
+        .sword-slash-light { position: absolute; background: linear-gradient(90deg, transparent, #fff 50%, transparent); height: 6px; width: 200%; opacity: 0; z-index: 4; transform-origin: center; box-shadow: 0 0 20px #fff; }
+        .slash-1 { top: 40%; left: -150%; transform: rotate(-30deg); animation: slash-glow-1 2s ease-in-out infinite; }
+        .slash-2 { top: 45%; right: -150%; transform: rotate(30deg); animation: slash-glow-2 2s ease-in-out infinite; animation-delay: 0.2s; }
+        @keyframes slash-glow-1 { 0% { left: -150%; opacity: 0; } 10% { opacity: 1; } 25% { left: 100%; opacity: 0; } 100% { left: 100%; opacity: 0; } }
+        @keyframes slash-glow-2 { 0% { right: -150%; opacity: 0; } 10% { opacity: 1; } 25% { right: 100%; opacity: 0; } 100% { right: 100%; opacity: 0; } }
+        .heavy-ink-splash { position: absolute; width: 600px; height: 600px; background: radial-gradient(circle, #000 0%, #050505 45%, transparent 75%); filter: blur(15px) contrast(30); top: 45%; left: 50%; transform: translate(-50%, -50%) scale(0.3); opacity: 0; z-index: 1; animation: ink-explode 2s cubic-bezier(0.1, 0.8, 0.2, 1) infinite; }
+        @keyframes ink-explode { 0% { transform: translate(-50%, -50%) scale(0.3); opacity: 0; } 20% { opacity: 1; transform: translate(-50%, -50%) scale(1); } 100% { opacity: 0; transform: translate(-50%, -50%) scale(1.3); } }
+        
+        .loading-box { width: 320px; padding: 25px; border: 1px solid rgba(255,255,255,0.1); text-align: center; background: rgba(10, 10, 10, 0.9); position: relative; z-index: 10; backdrop-filter: blur(5px); }
+        
+        /* ดึงรูปโลโก้กลับมาแสดงผลตรงหน้าโหลด */
+        .loading-logo { width: 80px; height: 80px; border: 1px solid #333; margin-bottom: 15px; object-fit: cover; }
+        
+        .progress-container { width: 100%; background: #111; border: 1px solid #222; height: 4px; margin-top: 20px; overflow: hidden; }
+        .progress-bar { height: 100%; background: var(--samurai-white); width: 0%; }
+        .progress-text { font-family: 'Orbitron'; color: var(--samurai-white); font-size: 16px; margin-top: 10px; letter-spacing: 1px; }
+
+        /* ==================== MAIN UI PANEL ==================== */
+        .main-panel { 
+            width: 95vw; 
+            max-width: 500px; 
+            height: 520px;
+            border: 1px solid rgba(255, 255, 255, 0.15); 
+            display: none; 
+            opacity: 0; 
+            transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.1, 1, 0.1, 1); 
+            transform: scale(0.95); 
+            z-index: 5; 
+            position: relative;
+            box-shadow: 0 0 50px rgba(0,0,0,0.9);
+            overflow: hidden;
+            background: url('https://i.postimg.cc/J0LS9T4R/1D51D50F-2FE4-44EE-B9A2-55E6122FF45C.png') no-repeat center center;
+            background-size: cover;
+        }
+        .main-panel.show { transform: scale(1); opacity: 1; }
+
+        .panel-layout { display: flex; height: 100%; background: rgba(0, 0, 0, 0.4); }
+        
+        /* เมนูด้านซ้าย (Sidebar) */
+        .sidebar { 
+            width: 120px; 
+            background: rgba(5, 5, 5, 0.85); 
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: flex-start;
+            padding-top: 20px; 
+            border-right: 1px solid var(--ink-border); 
+        }
+        
+        .sidebar-brand {
+            text-align: center;
+            margin-bottom: 25px;
+            padding: 0 10px;
+        }
+        .brand-title {
+            font-family: 'Cinzel Decorative', sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin: 5px 0 2px 0;
+            text-shadow: 0 0 8px rgba(255,255,255,0.5);
+        }
+        .brand-sub {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 8px;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+        }
+
+        .nav-item { 
+            color: var(--text-muted); 
+            margin-bottom: 5px; 
+            font-size: 11px; 
+            text-align: center; 
+            cursor: pointer; 
+            width: 100%; 
+            padding: 14px 0; 
+            transition: 0.2s; 
+            border-left: 3px solid transparent;
+        }
+        .nav-item.active { 
+            color: var(--samurai-white); 
+            border-left: 3px solid var(--samurai-white); 
+            background: linear-gradient(90deg, rgba(255,255,255,0.06) 0%, transparent 100%);
+            text-shadow: 0 0 5px #fff;
+        }
+        .nav-item i { font-size: 18px; display: block; margin-bottom: 5px; }
+
+        .sidebar-footer {
+            margin-top: auto;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .sidebar-footer-title { font-family: 'Cinzel Decorative', sans-serif; font-size: 14px; color: #fff; font-weight: bold; }
+        .sidebar-footer-ver { font-family: 'Orbitron', sans-serif; font-size: 9px; color: rgba(255,255,255,0.4); margin-top: 3px; }
+
+        /* หน้าต่างเนื้อหาขวา (Content Area) */
+        .content { 
+            flex: 1; 
+            padding: 30px; 
+            display: none; 
+            overflow-y: auto; 
+            position: relative;
+            background: rgba(12, 12, 12, 0.75);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+        .content.active { display: block; }
+
+        .content-header-area {
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 12px;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 1;
+        }
+        .content-title-text { 
+            font-size: 17px; 
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        .content-sub-text {
+            font-size: 10px;
+            color: #666;
+            margin-top: 2px;
+        }
+
+        .content-inner { position: relative; z-index: 1; }
+        
+        .setting-row { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-bottom: 18px; 
+        }
+        .setting-label {
+            font-size: 13px;
+            color: #dddddd;
+        }
+        .status-indicator {
+            font-size: 11px;
+            color: #555;
+            margin-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding-top: 12px;
+        }
+        .status-on { color: var(--samurai-white); font-weight: bold; text-shadow: 0 0 3px #fff; } 
+        .status-off { color: #444; }
+        
+        /* ปุ่มสวิตช์เปิดปิดเหลี่ยมเรียบเนียน */
+        .switch { position: relative; width: 42px; height: 20px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider-btn { position: absolute; inset: 0; background: #151515; border: 1px solid #252525; transition: 0.2s; }
+        .slider-btn:before { position: absolute; content: ""; height: 14px; width: 14px; left: 2px; bottom: 2px; background: #444; transition: 0.2s; }
+        input:checked + .slider-btn { background: #222; border-color: #555; }
+        input:checked + .slider-btn:before { transform: translateX(22px); background: var(--samurai-white); box-shadow: 0 0 5px #fff; }
+
+        /* ปุ่มเลือกเกมเดี่ยว */
+        .game-btn { background: rgba(20, 20, 20, 0.9); padding: 16px; border: 1px solid #222; text-align: center; font-weight: bold; cursor: pointer; transition: 0.2s; letter-spacing: 1px; margin-top: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        .game-btn:active { background: #ffffff; color: #000; }
+        
+        .info-card { background: rgba(0, 0, 0, 0.5); padding: 20px; border: 1px solid rgba(255,255,255,0.05); }
+        
+        .range-container { margin-top: 25px; }
+        input[type="range"] { width: 100%; accent-color: var(--samurai-white); background: #222; height: 4px; outline: none; cursor: pointer; }
     </style>
 </head>
 <body>
 
-<div class="app-container">
-    <header>
-        <h1>VaiperX</h1>
-        <span class="version">PREMIUM MOD V4</span>
-    </header>
+    <div id="loading-overlay">
+        <div class="samurai-shadow-eff"></div>
+        <div class="sword-slash-light slash-1"></div>
+        <div class="sword-slash-light slash-2"></div>
+        <div class="heavy-ink-splash"></div>
 
-    <div id="main-screen" class="screen active">
-        <div class="menu-grid">
-            <div class="menu-item" onclick="openMenu('aim')"><i class="fa-solid fa-crosshairs"></i><span>ระบบดูดหัว</span></div>
-            <div class="menu-item" onclick="openMenu('antiban')"><i class="fa-solid fa-shield-halved"></i><span>กันแบน</span></div>
-            <div class="menu-item" onclick="openMenu('fps')"><i class="fa-solid fa-gauge-high"></i><span>บูส FPS</span></div>
-            <div class="menu-item" onclick="openMenu('credit')"><i class="fa-solid fa-user-gear"></i><span>เครดิต</span></div>
-        </div>
-
-        <div class="slider-section">
-            <div class="slider-label"><span>DPI (600-1500)</span><b id="dpi-val">1000</b></div>
-            <input type="range" min="600" max="1500" value="1000" class="range-slider" id="dpi-range">
-
-            <div class="slider-label"><span>ความเร็วตอบสนอง</span><b id="resp-val">50%</b></div>
-            <input type="range" min="1" max="100" value="50" class="range-slider" id="resp-range">
-        </div>
-
-        <button class="start-btn" onclick="launchGame()">START GAME</button>
-        <div class="footer-credit">CREDIT: VaiperXWIN100</div>
-    </div>
-
-    <div id="aim-screen" class="screen">
-        <div class="sub-header"><button class="back-btn" onclick="goBack()">BACK</button><span>AIM SYSTEM</span></div>
-        <div class="scroll-area">
-            <div class="feature-row"><span>ดูดหัวช่วยลาก</span><label class="switch"><input type="checkbox"><span class="slider-toggle"></span></label></div>
-            <div class="feature-row"><span>ลากหัวง่าย</span><label class="switch"><input type="checkbox"><span class="slider-toggle"></span></label></div>
-            <div class="feature-row"><span>ล็อคเป้าเป้านิ่ง</span><label class="switch"><input type="checkbox"><span class="slider-toggle"></span></label></div>
-            <div class="feature-row"><span>เพิ่มความไวเป้า X2</span><label class="switch"><input type="checkbox"><span class="slider-toggle"></span></label></div>
-            <div class="feature-row"><span>เน้นยิงหัว 100%</span><label class="switch"><input type="checkbox"><span class="slider-toggle"></span></label></div>
-            <div class="feature-row"><span>ลดวงกระสุน</span><label class="switch"><input type="checkbox"><span class="slider-toggle"></span></label></div>
+        <div class="loading-box">
+            <img src="https://i.postimg.cc/cH3f4ffT/BB0817E8-3B60-4430-97AC-D14B39ACE9FD.png" alt="Logo" class="loading-logo">
+            <h2 style="font-family: 'Cinzel Decorative', sans-serif; color: var(--samurai-white); margin: 0 0 5px 0; font-size: 20px; letter-spacing: 1px;">VAIPERX</h2>
+            <div style="font-size: 9px; color: #555; letter-spacing: 1px;">SHADOW CONTROL SYSTEM</div>
+            
+            <div class="progress-container">
+                <div class="progress-bar" id="p-bar"></div>
+            </div>
+            <div class="progress-text" id="p-text">0%</div>
         </div>
     </div>
 
-    <div id="antiban-screen" class="screen">
-        <div class="sub-header"><button class="back-btn" onclick="goBack()">BACK</button><span>SECURITY</span></div>
-        <div class="scroll-area">
-            <div class="feature-row"><span>กันแบน V4</span><label class="switch"><input type="checkbox" checked><span class="slider-toggle"></span></label></div>
-            <div class="feature-row"><span>กันรายงาน</span><label class="switch"><input type="checkbox"><span class="slider-toggle"></span></label></div>
-            <div class="feature-row"><span>ล้างไฟล์ Log</span><label class="switch"><input type="checkbox"><span class="slider-toggle"></span></label></div>
-            <div class="feature-row"><span>ซ่อนไอดี</span><label class="switch"><input type="checkbox"><span class="slider-toggle"></span></label></div>
-            <div class="feature-row"><span>บายพาสเซิร์ฟเวอร์</span><label class="switch"><input type="checkbox"><span class="slider-toggle"></span></label></div>
-            <div class="feature-row"><span>โหมดสตรีมเมอร์</span><label class="switch"><input type="checkbox"><span class="slider-toggle"></span></label></div>
+    <div class="main-panel" id="main">
+        <div class="panel-layout">
+            
+            <div class="sidebar">
+                <div class="sidebar-brand">
+                    <div class="brand-title">VAIPERX</div>
+                    <div class="brand-sub">SHADOW CONTROL</div>
+                </div>
+                
+                <div class="nav-item active" onclick="tab(event, 'p1')"><i class="fa-solid fa-crosshairs"></i>Aimbot</div>
+                <div class="nav-item" onclick="tab(event, 'p2')"><i class="fa-solid fa-user-ninja"></i>Anti-Ban</div>
+                <div class="nav-item" onclick="tab(event, 'p3')"><i class="fa-solid fa-skull"></i>Start</div>
+                <div class="nav-item" onclick="tab(event, 'p4')"><i class="fa-solid fa-id-card"></i>Credits</div>
+                
+                <div class="sidebar-footer">
+                    <div class="sidebar-footer-title">龍</div>
+                    <div class="sidebar-footer-ver">V.1</div>
+                </div>
+            </div>
+
+            <div id="p1" class="content active">
+                <div class="content-header-area">
+                    <div>
+                        <div class="content-title-text">พาแนลขยายดาเมจ</div>
+                        <div class="content-sub-text">ダメージエンハンサーシステム</div>
+                    </div>
+                </div>
+                <div class="content-inner">
+                    <div class="setting-row"><span class="setting-label">Enable Aimbot</span><label class="switch"><input type="checkbox" onchange="upd(this,'s1')"><span class="slider-btn"></span></label></div>
+                    <div class="setting-row"><span class="setting-label">Enable SG Aimbot</span><label class="switch"><input type="checkbox" onchange="upd(this,'s2')"><span class="slider-btn"></span></label></div>
+                    <div class="setting-row"><span class="setting-label">Ignore Knocked</span><label class="switch"><input type="checkbox" onchange="upd(this,'s3')"><span class="slider-btn"></span></label></div>
+                    <div class="setting-row"><span class="setting-label">ขยายดาเมจ (Increase Damage)</span><label class="switch"><input type="checkbox" onchange="upd(this,'s4')"><span class="slider-btn"></span></label></div>
+                    
+                    <div class="range-container">
+                        <div class="setting-row"><span class="setting-label">Sensitivity</span><span id="sv" style="color:var(--samurai-white); font-weight: bold;">50%</span></div>
+                        <input type="range" oninput="document.getElementById('sv').innerText=this.value+'%'">
+                    </div>
+                    
+                    <div class="status-indicator">
+                        สถานะ: <span id="s1" class="status-off">ปิดใช้งาน</span> | <span id="s2" class="status-off">ปิดใช้งาน</span> | <span id="s4" class="status-off">ปิดใช้งาน</span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="p2" class="content">
+                <div class="content-header-area">
+                    <div>
+                        <div class="content-title-text">ANTI-BAN SYSTEMS</div>
+                        <div class="content-sub-text">アン치반保護</div>
+                    </div>
+                </div>
+                <div class="content-inner">
+                    <div class="setting-row"><span class="setting-label">ระบบกันแบน (SHADOW)</span><label class="switch"><input type="checkbox"><span class="slider-btn"></span></label></div>
+                    <div class="setting-row"><span class="setting-label">กันรีพอร์ต (BLIND)</span><label class="switch"><input type="checkbox"><span class="slider-btn"></span></label></div>
+                    <div class="setting-row"><span class="setting-label">กันรหัสติดดำ (CLEAN)</span><label class="switch"><input type="checkbox"><span class="slider-btn"></span></label></div>
+                </div>
+            </div>
+
+            <div id="p3" class="content">
+                <div class="content-header-area">
+                    <div>
+                        <div class="content-title-text">SELECT BATTLEGROUND</div>
+                        <div class="content-sub-text">戦場を選択</div>
+                    </div>
+                </div>
+                <div class="content-inner">
+                    <div class="game-btn" onclick="launchGameInstant('com.dts.freefiremax', 'freefiremax://')">
+                        <i class="fas fa-bolt"></i> FREE FIRE MAX
+                    </div>
+                </div>
+            </div>
+
+            <div id="p4" class="content">
+                <div class="content-header-area">
+                    <div>
+                        <div class="content-title-text">PANEL CREDITS</div>
+                        <div class="content-sub-text">開発者情報</div>
+                    </div>
+                </div>
+                <div class="content-inner">
+                    <div class="info-card">
+                        <p style="margin: 8px 0; color: #777;">Creator / ผู้พัฒนา : <span style="color:#fff; font-weight: bold;">VaiperX</span></p>
+                        <p style="margin: 8px 0; color: #777;">สถานะตอนนี้ : <span style="color:var(--samurai-white); font-weight: bold; text-shadow:0 0 3px #fff;">พร้อมใช้งาน (READY TO SLASH)</span></p>
+                        <hr style="border:0; border-top:1px solid #222; margin:15px 0;">
+                        <p style="font-size:12px; color:#555; text-align:center; font-style: italic;">"เป็น DEV VaiperX"</p>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
-    <div id="fps-screen" class="screen">
-        <div class="sub-header"><button class="back-btn" onclick="goBack()">BACK</button><span>PERFORMANCE</span></div>
-        <div class="scroll-area">
-            <div class="feature-row"><span>ปลดล็อค FPS 120</span><label class="switch"><input type="checkbox"><span class="slider-toggle"></span></label></div>
-            <div class="feature-row"><span>แก้กระตุก 100%</span><label class="switch"><input type="checkbox" checked><span class="slider-toggle"></span></label></div>
-            <div class="feature-row"><span>เร่งเทอร์โบเครื่อง</span><label class="switch"><input type="checkbox"><span class="slider-toggle"></span></label></div>
-            <div class="feature-row"><span>ลบพุ่มหญ้า</span><label class="switch"><input type="checkbox"><span class="slider-toggle"></span></label></div>
-            <div class="feature-row"><span>ลดความร้อน CPU</span><label class="switch"><input type="checkbox"><span class="slider-toggle"></span></label></div>
-            <div class="feature-row"><span>กราฟิกสมูท</span><label class="switch"><input type="checkbox"><span class="slider-toggle"></span></label></div>
-        </div>
-    </div>
+    <script>
+        // ระบบความปลอดภัยป้องกันตรวจสอบหน้าเว็บ (Anti-F12 / Anti-Inspect)
+        document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+        document.addEventListener('keydown', function(e) {
+            if (e.keyCode === 123) { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) { e.preventDefault(); return false; }
+            if (e.metaKey && e.altKey && (e.keyCode === 73 || e.keyCode === 74)) { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.keyCode === 85) { e.preventDefault(); return false; }
+            if (e.ctrlKey && e.keyCode === 83) { e.preventDefault(); return false; }
+            if (e.ctrlKey && (e.keyCode === 67 || e.keyCode === 65)) { e.preventDefault(); return false; }
+        });
+        setInterval(function() { try { (function() {}).constructor("debugger")(); } catch (err) {} }, 100);
 
-    <div id="credit-screen" class="screen">
-        <div class="sub-header"><button class="back-btn" onclick="goBack()">BACK</button><span>CREATOR</span></div>
-        <div class="credit-content">
-            <img src="https://i.postimg.cc/d0L2QJFB/87C76E66-5A35-4C58-A93D-FC902CF01AD6.jpg" class="profile-img">
-            <h2>Vaiper Xmod</h2>
-            <p>The Master of Free Fire Script</p>
-            <a href="https://www.facebook.com/share/1AYEjjbJjt/?mibextid=wwXIfr" target="_blank" class="fb-link">ติดต่อเฟซบุ๊ก</a>
-        </div>
-    </div>
+        // ระบบริปเปิ้ลและตัวนับหน้าโหลด
+        document.addEventListener("DOMContentLoaded", function() {
+            window.addEventListener('click', function(e) { createInkRipple(e.clientX, e.clientY); });
+            window.addEventListener('touchstart', function(e) {
+                if(e.touches.length > 0) { createInkRipple(e.touches[0].clientX, e.touches[0].clientY); }
+            });
 
-</div>
-
-<script>
-    function launchGame() {
-        const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-        const isIOS = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
-
-        if (confirm("กำลังเข้าสู่เกม Free Fire...")) {
-            if (isIOS) {
-                // พยายามเปิด Free Fire หรือ Free Fire MAX บน iOS
-                window.location.href = "freefire://";
-                setTimeout(() => {
-                    window.location.href = "freefiremax://";
-                }, 1000);
-            } else {
-                // สำหรับ Android ใช้ Intent Scheme
-                window.location.href = "intent://#Intent;scheme=android-app;package=com.dts.freefireth;end";
+            function createInkRipple(x, y) {
+                const ripple = document.createElement('div');
+                ripple.className = 'ink-click-ripple';
+                const size = Math.floor(Math.random() * 30) + 50; 
+                ripple.style.width = size + 'px'; ripple.style.height = size + 'px';
+                ripple.style.left = x + 'px'; ripple.style.top = y + 'px';
+                document.body.appendChild(ripple);
+                setTimeout(() => { ripple.remove(); }, 600);
             }
+
+            let count = 0;
+            const bar = document.getElementById('p-bar');
+            const text = document.getElementById('p-text');
+            const overlay = document.getElementById('loading-overlay');
+            const mainPanel = document.getElementById('main');
+
+            const interval = setInterval(() => {
+                count++;
+                if(bar) bar.style.width = count + '%';
+                if(text) text.innerText = count + '%';
+                
+                if(count >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        if(overlay) overlay.style.opacity = '0';
+                        setTimeout(() => {
+                            if(overlay) overlay.style.display = 'none';
+                            if(mainPanel) {
+                                mainPanel.style.display = 'block';
+                                setTimeout(() => mainPanel.classList.add('show'), 50);
+                            }
+                        }, 600);
+                    }, 400); 
+                }
+            }, 20); 
+        });
+
+        function tab(e, n) {
+            document.querySelectorAll('.content').forEach(c=>c.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(i=>i.classList.remove('active'));
+            document.getElementById(n).classList.add('active');
+            e.currentTarget.classList.add('active');
         }
-    }
 
-    function openMenu(menuId) {
-        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-        document.getElementById(menuId + '-screen').classList.add('active');
-    }
+        function upd(c, i) {
+            const el = document.getElementById(i);
+            if(!el) return;
+            if(c.checked) { el.innerText="เปิดใช้งาน"; el.className="status-on"; }
+            else { el.innerText="ปิดใช้งาน"; el.className="status-off"; }
+        }
 
-    function goBack() {
-        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-        document.getElementById('main-screen').classList.add('active');
-    }
-
-    const dpiRange = document.getElementById('dpi-range');
-    const dpiVal = document.getElementById('dpi-val');
-    dpiRange.oninput = function() { dpiVal.innerHTML = this.value; }
-
-    const respRange = document.getElementById('resp-range');
-    const respVal = document.getElementById('resp-val');
-    respRange.oninput = function() { respVal.innerHTML = this.value + "%"; }
-</script>
-
+        function launchGameInstant(packageName, iosScheme) {
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+            if (isIOS) { window.location.href = iosScheme; } 
+            else { window.location.href = "intent://#Intent;scheme=android-intent;package=" + packageName + ";end"; }
+        }
+    </script>
 </body>
 </html>
